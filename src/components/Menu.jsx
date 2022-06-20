@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Transition } from '@headlessui/react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   ClipboardCheckIcon,
   InboxIcon,
   LogoutIcon,
   StarIcon,
 } from '@heroicons/react/outline';
-import { useDispatch, useSelector } from 'react-redux';
 
 import defaultListsId from '../constant/defaultListId';
 import useWindowDimensions from '../hooks/useWindowDimensions';
-import ListItem from './List/ListItem';
 import Button from './UI/Button';
 import Modal from './UI/Modal';
 import { logoutUser } from '../features/user/userActions';
 import { selectListLoading, selectLists } from '../features/todo/todoSlice';
-import { useLocation } from 'react-router-dom';
+import ListOption from './List/ListOption';
 
 const Menu = ({ isOpen, closeSidebar }) => {
   const { pathname } = useLocation();
@@ -52,33 +52,39 @@ const Menu = ({ isOpen, closeSidebar }) => {
           <MenuListSkeleton />
         ) : (
           <>
-            <ListItem id="inbox">
-              <InboxIcon className="mr-2 h-5 w-5 stroke-[1.5] text-sky-500" />
-              Inbox
-            </ListItem>
-            <ListItem id="important">
-              <StarIcon className="mr-2 h-5 w-5 stroke-[1.5] text-orange-500" />
-              Important
-            </ListItem>
-            <ListItem id="tasks">
-              <ClipboardCheckIcon className="mr-2 h-5 w-5 stroke-[1.5] text-violet-500" />
-              Tasks
-            </ListItem>
-            <div className="mt-2 border-t border-zinc-900/10 pt-2">
+            <MenuNav to="inbox">
+              <div className="flex items-center">
+                <InboxIcon className="mr-2 h-5 w-5 stroke-[1.5] text-sky-500" />
+                Inbox
+              </div>
+            </MenuNav>
+            <MenuNav to="important">
+              <div className="flex items-center">
+                <StarIcon className="mr-2 h-5 w-5 stroke-[1.5] text-orange-500" />
+                Important
+              </div>
+            </MenuNav>
+            <MenuNav to="tasks">
+              <div className="flex items-center">
+                <ClipboardCheckIcon className="mr-2 h-5 w-5 stroke-[1.5] text-violet-500" />
+                Tasks
+              </div>
+            </MenuNav>
+            <div className="mt-2 border-t border-zinc-900/10 pt-2 dark:border-zinc-50/10">
               {lists.map((list) => {
                 if (defaultListsId.includes(list.id)) {
                   return null;
                 }
 
                 return (
-                  <ListItem
+                  <MenuNav
                     key={list.id}
-                    id={list.id}
+                    to={list.id}
                     theme={list.theme}
                     tasksCount={list.tasksCount}
                   >
                     {list.name}
-                  </ListItem>
+                  </MenuNav>
                 );
               })}
             </div>
@@ -115,44 +121,40 @@ const Menu = ({ isOpen, closeSidebar }) => {
           <MenuListSkeleton />
         ) : (
           <>
-            <ListItem
-              id="inbox"
-              className="!bg-transparent hover:!bg-zinc-200 dark:!bg-transparent dark:hover:!bg-zinc-800"
-            >
-              <InboxIcon className="mr-2 h-5 w-5 stroke-[1.5] text-sky-500" />
-              Inbox
-            </ListItem>
-            <ListItem
-              id="important"
-              className="!bg-transparent hover:!bg-zinc-200 dark:!bg-transparent dark:hover:!bg-zinc-800"
-            >
-              <StarIcon className="mr-2 h-5 w-5 stroke-[1.5] text-orange-500" />
-              Important
-            </ListItem>
-            <ListItem
-              id="tasks"
-              className="!bg-transparent hover:!bg-zinc-200 dark:!bg-transparent dark:hover:!bg-zinc-800"
-            >
-              <ClipboardCheckIcon className="mr-2 h-5 w-5 stroke-[1.5] text-violet-500" />
-              Tasks
-            </ListItem>
-            <div className="mt-2 border-t border-zinc-900/10 pt-2 pb-6">
+            <MenuNav to="inbox">
+              <div className="flex items-center">
+                <InboxIcon className="mr-2 h-5 w-5 stroke-[1.5] text-sky-500" />
+                Inbox
+              </div>
+            </MenuNav>
+            <MenuNav to="important">
+              <div className="flex items-center">
+                <StarIcon className="mr-2 h-5 w-5 stroke-[1.5] text-orange-500" />
+                Important
+              </div>
+            </MenuNav>
+            <MenuNav to="tasks">
+              <div className="flex items-center">
+                <ClipboardCheckIcon className="mr-2 h-5 w-5 stroke-[1.5] text-violet-500" />
+                Tasks
+              </div>
+            </MenuNav>
+            <div className="mt-2 border-t border-zinc-900/10 pt-2 pb-6 dark:border-zinc-50/10">
               {lists.map((list) => {
                 if (defaultListsId.includes(list.id)) {
                   return null;
                 }
 
                 return (
-                  <ListItem
+                  <MenuNav
                     key={list.id}
-                    id={list.id}
+                    to={list.id}
                     theme={list.theme}
                     tasksCount={list.tasksCount}
-                    className="!bg-transparent hover:!bg-zinc-200 dark:!bg-transparent dark:hover:!bg-zinc-800"
                     option
                   >
                     {list.name}
-                  </ListItem>
+                  </MenuNav>
                 );
               })}
             </div>
@@ -166,6 +168,48 @@ const Menu = ({ isOpen, closeSidebar }) => {
         </Button>
       </div>
     </Transition>
+  );
+};
+
+const MenuNav = ({ theme, to, option, children }) => {
+  const id = to;
+  return (
+    <div className="relative flex items-center">
+      <NavLink
+        to={`/${to}`}
+        className={({ isActive }) =>
+          `${
+            isActive
+              ? 'bg-zinc-200 dark:bg-zinc-700'
+              : 'bg-transparent hover:bg-zinc-200 dark:hover:bg-zinc-700'
+          } relative flex w-full items-center justify-between rounded-xl p-3 text-zinc-900 transition-colors duration-200 dark:text-zinc-200`
+        }
+      >
+        <div className="mr-6 inline-flex items-center">
+          {theme && (
+            <span
+              style={{
+                backgroundColor: theme,
+              }}
+              className="mr-2 h-5 w-5 flex-shrink-0 select-none rounded-md"
+            >
+              &nbsp;
+            </span>
+          )}
+          <div className="line-clamp-1">{children}</div>
+        </div>
+      </NavLink>
+      <div className="absolute right-2 flex items-center space-x-2">
+        {option && (
+          <ListOption
+            buttonClassName="border-none"
+            id={id}
+            name={children}
+            theme={theme}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 

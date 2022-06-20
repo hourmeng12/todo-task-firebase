@@ -4,10 +4,10 @@ const TaskSkeleton = () => {
   return (
     <>
       <div className="mt-4 flex items-center justify-between lg:mt-8">
-        <div className="h-10 w-screen max-w-xs animate-pulse cursor-default rounded-xl bg-white dark:bg-zinc-800">
+        <div className="mr-2 h-10 w-screen max-w-xs animate-pulse cursor-default rounded-xl bg-white dark:bg-zinc-800">
           &nbsp;
         </div>
-        <div className="flex space-x-2">
+        <div className="flex space-x-1">
           <div className="h-10 w-10 animate-pulse cursor-default rounded-xl bg-white dark:bg-zinc-800">
             &nbsp;
           </div>

@@ -11,21 +11,21 @@ const ListItem = ({ id, theme, tasksCount, option, className, children }) => {
           className ? className : ''
         }`}
       >
-        <div className="inline-flex items-center">
+        <div className="mr-6 flex items-center">
           {theme && (
             <span
               style={{
                 backgroundColor: theme,
               }}
-              className="mr-2 h-5 w-5 select-none rounded-md"
+              className="mr-2 h-5 w-5 flex-shrink-0 select-none rounded-md"
             >
               &nbsp;
             </span>
           )}
-          {children}
+          <span className="line-clamp-1">{children}</span>
         </div>
       </Link>
-      <div className="absolute right-2 flex items-center space-x-2 ">
+      <div className="absolute right-2 flex items-center space-x-2">
         {tasksCount && (
           <span className="inline-flex h-6 min-w-[1.25rem] items-center justify-center rounded-md bg-black/5 px-1 text-sm dark:bg-white/10">
             {tasksCount}

@@ -22,16 +22,15 @@ const DeleteListModal = ({ id, name, isOpen, onClose }) => {
           <h2 className="text-center text-xl text-zinc-900 dark:text-zinc-200">
             Delete List
           </h2>
-          <p className="mt-4 text-zinc-700 dark:text-zinc-400">
-            Are you sure you want to delele{' '}
-            <span className="text-base font-medium text-zinc-900 line-clamp-1 dark:text-zinc-200">
-              {name}
-            </span>
-            ?
-          </p>
-          <p className="text-zinc-700 dark:text-zinc-400">
-            This action can not be undone.
-          </p>
+          <div className="mt-4 flex text-zinc-700 dark:text-zinc-400">
+            <p className="line-clamp-1">
+              <span>Are you sure you want to delele&nbsp;</span>
+              <span className="text-base font-medium text-zinc-900 dark:text-zinc-200">
+                {name}
+              </span>
+            </p>
+            <span className="w-10">?</span>
+          </div>
         </div>
         <div className="mt-4 flex items-center justify-end space-x-2">
           <Button

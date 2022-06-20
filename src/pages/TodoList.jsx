@@ -46,16 +46,22 @@ const TodoList = () => {
         <>
           <div className="mt-4 space-y-2 lg:mt-8">
             <ListItem id="inbox" tasksCount={5}>
-              <InboxIcon className="mr-2 h-5 w-5 stroke-[1.5] text-sky-500" />
-              Inbox
+              <div className="flex items-center">
+                <InboxIcon className="mr-2 h-5 w-5 stroke-[1.5] text-sky-500" />
+                Inbox
+              </div>
             </ListItem>
             <ListItem id="important" tasksCount={1}>
-              <StarIcon className="mr-2 h-5 w-5 stroke-[1.5] text-orange-500" />
-              Important
+              <div className="flex items-center">
+                <StarIcon className="mr-2 h-5 w-5 stroke-[1.5] text-orange-500" />
+                Important
+              </div>
             </ListItem>
             <ListItem id="tasks" tasksCount={8}>
-              <ClipboardCheckIcon className="mr-2 h-5 w-5 stroke-[1.5] text-violet-500" />
-              Tasks
+              <div className="flex items-center">
+                <ClipboardCheckIcon className="mr-2 h-5 w-5 stroke-[1.5] text-violet-500" />
+                Tasks
+              </div>
             </ListItem>
           </div>
 
