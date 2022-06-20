@@ -15,8 +15,10 @@ import Button from './UI/Button';
 import Modal from './UI/Modal';
 import { logoutUser } from '../features/user/userActions';
 import { selectListLoading, selectLists } from '../features/todo/todoSlice';
+import { useLocation } from 'react-router-dom';
 
 const Menu = ({ isOpen, closeSidebar }) => {
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const [isMobile, setIsMobile] = useState(false);
@@ -27,6 +29,12 @@ const Menu = ({ isOpen, closeSidebar }) => {
     dispatch(logoutUser());
     closeSidebar();
   };
+
+  useEffect(() => {
+    if (isMobile) {
+      closeSidebar();
+    }
+  }, [pathname, isMobile, closeSidebar]);
 
   useEffect(() => {
     if (width < 1024) {

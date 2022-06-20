@@ -9,6 +9,7 @@ import Button from './UI/Button';
 import Menu from './Menu';
 import useDarkMode from '../hooks/useDarkMode';
 import { selectUser } from '../features/user/userSlice';
+import { useCallback } from 'react';
 
 const Navbar = () => {
   const user = useSelector(selectUser);
@@ -19,9 +20,9 @@ const Navbar = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const closeSidebar = () => {
+  const closeSidebar = useCallback(() => {
     setIsOpen(false);
-  };
+  }, []);
 
   const handleMode = () => setDarkTheme(!darkTheme);
 
