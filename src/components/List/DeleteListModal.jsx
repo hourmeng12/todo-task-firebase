@@ -24,7 +24,7 @@ const DeleteListModal = ({ id, name, isOpen, onClose }) => {
           </h2>
           <p className="mt-4 text-zinc-700 dark:text-zinc-400">
             Are you sure you want to delele{' '}
-            <span className="text-base font-medium text-zinc-900 dark:text-zinc-200">
+            <span className="text-base font-medium text-zinc-900 line-clamp-1 dark:text-zinc-200">
               {name}
             </span>
             ?

@@ -22,7 +22,12 @@ const EditTaskModal = ({ id, task = '', theme, isOpen, onClose }) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handelUpdateTask}>
         <div className="space-y-1">
-          <label htmlFor="task">Task</label>
+          <label
+            className="font-medium text-zinc-900 dark:text-zinc-200"
+            htmlFor="task"
+          >
+            Task
+          </label>
           <input
             type="text"
             name="task"
@@ -30,7 +35,7 @@ const EditTaskModal = ({ id, task = '', theme, isOpen, onClose }) => {
             style={{
               borderColor: theme,
             }}
-            className="border-2"
+            className="border-2 bg-transparent"
             value={enteredTask}
             onChange={(e) => setEnteredTask(e.target.value)}
           />
@@ -43,7 +48,7 @@ const EditTaskModal = ({ id, task = '', theme, isOpen, onClose }) => {
           >
             Cancel
           </Button>
-          <Button className="bg-green-500 px-4 font-medium text-white hover:bg-red-600">
+          <Button className="bg-teal-400 px-4 font-medium hover:bg-teal-500 dark:text-white">
             Edit
           </Button>
         </div>

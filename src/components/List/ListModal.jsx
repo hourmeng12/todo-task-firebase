@@ -105,7 +105,10 @@ const ListModal = ({
       <form onSubmit={handleAddList}>
         <div className="space-y-4">
           <div className="space-y-1">
-            <label className="text-zinc-600 dark:text-zinc-400" htmlFor="name">
+            <label
+              className="font-medium text-zinc-900 dark:text-zinc-200"
+              htmlFor="name"
+            >
               Name
             </label>
             <input
@@ -122,7 +125,9 @@ const ListModal = ({
             />
           </div>
           <div className="space-y-1">
-            <p className="text-zinc-600 dark:text-zinc-400">Color</p>
+            <p className="font-medium text-zinc-900 dark:text-zinc-200">
+              Color
+            </p>
             <div
               onChange={changeColor}
               className="flex flex-wrap justify-start space-x-2 space-y-2"
