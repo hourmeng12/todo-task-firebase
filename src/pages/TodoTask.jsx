@@ -13,6 +13,7 @@ import { getAllTasks } from '../features/todo/tasksActions';
 import AddTask from '../components/Task/AddTask';
 import ListOption from '../components/List/ListOption';
 import TaskSkeleton from '../components/Task/TaskSkeleton';
+import TogglePanel from '../components/UI/TogglePanel';
 
 const TodoTask = () => {
   const { listId } = useParams();
@@ -20,7 +21,10 @@ const TodoTask = () => {
   const listLoading = useSelector(selectListLoading);
   const taskLoading = useSelector(selectTaskLoading);
   const list = lists.find((list) => list.id === listId) ?? {};
-  const activeTasks = list?.tasks ?? [];
+  const activeTasks =
+    list?.tasks?.filter((task) => task.completed === false) ?? [];
+  const completedTasks =
+    list?.tasks?.filter((task) => task.completed === true) ?? [];
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,9 +59,18 @@ const TodoTask = () => {
         </div>
       </div>
 
-      <div className="mt-8 space-y-2">
-        <AddTask theme={list.theme} />
-        <Task tasks={activeTasks} theme={list.theme} />
+      <div className="mt-8">
+        <div className="space-y-2">
+          <AddTask theme={list.theme} />
+          <Task tasks={activeTasks} theme={list.theme} />
+        </div>
+        {completedTasks.length > 0 && (
+          <div className="mt-4">
+            <TogglePanel button="Completed">
+              <Task tasks={completedTasks} theme={list.theme} />
+            </TogglePanel>
+          </div>
+        )}
       </div>
     </div>
   );
