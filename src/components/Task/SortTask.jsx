@@ -28,7 +28,7 @@ const SortTask = () => {
         ref={setPopperElement}
         style={styles.popper}
         {...attributes.popper}
-        className="absolute left-1/2 z-10 w-screen max-w-xs -translate-x-1/2 transform px-4 sm:px-0"
+        className="absolute left-1/2 z-20 w-screen max-w-xs -translate-x-1/2 transform px-4 sm:px-0"
       >
         <div className="mt-2 rounded-lg border border-zinc-900/10 shadow-lg ring-1 ring-black ring-opacity-5 dark:border-white/10">
           <div className="relative grid grid-cols-3 gap-2 rounded-lg bg-white p-4 dark:bg-zinc-800">
