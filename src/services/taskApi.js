@@ -19,6 +19,7 @@ class taskApi {
     return addDoc(taskCollectionRef, {
       listId,
       task: newTask,
+      completed: false,
       createdAt: serverTimestamp(),
     });
   }

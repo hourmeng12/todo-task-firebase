@@ -21,10 +21,8 @@ const TodoTask = () => {
   const listLoading = useSelector(selectListLoading);
   const taskLoading = useSelector(selectTaskLoading);
   const list = lists.find((list) => list.id === listId) ?? {};
-  const activeTasks =
-    list?.tasks?.filter((task) => task.completed === false) ?? [];
-  const completedTasks =
-    list?.tasks?.filter((task) => task.completed === true) ?? [];
+  const activeTasks = list?.tasks?.filter((task) => !task.completed) ?? [];
+  const completedTasks = list?.tasks?.filter((task) => task.completed) ?? [];
   const dispatch = useDispatch();
 
   useEffect(() => {

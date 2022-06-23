@@ -7,6 +7,7 @@ export const addTask = (listId, task) => async (dispatch) => {
     const transformTask = {
       id: data.id,
       task,
+      completed: false,
     };
 
     dispatch(todoActions.addTask({ listId, task: transformTask }));
