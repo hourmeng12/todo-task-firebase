@@ -3,10 +3,35 @@ import { Popover } from '@headlessui/react';
 import { SwitchVerticalIcon } from '@heroicons/react/outline';
 import { usePopper } from 'react-popper';
 import Select from '../UI/Select';
+import { useDispatch } from 'react-redux';
+import { getAllTasksBy } from '../../features/todo/tasksActions';
+import { useParams } from 'react-router-dom';
 
-const SORT_BY = ['Default', 'Alphabetically', 'Creation Date', 'Importance'];
+const SORT_BY = [
+  {
+    text: 'Default',
+    value: 'createdAt',
+  },
+  {
+    text: 'Alphabetically',
+    value: 'task',
+  },
+  {
+    text: 'Creation Date',
+    value: 'createdAt',
+  },
+];
 
-const ORDER_BY = ['Ascending', 'Descending'];
+const ORDER_BY = [
+  {
+    text: 'Ascending',
+    value: 'asc',
+  },
+  {
+    text: 'Descending',
+    value: 'desc',
+  },
+];
 
 const SortTask = () => {
   const [referenceElement, setReferenceElement] = useState();
@@ -14,6 +39,26 @@ const SortTask = () => {
   const { styles, attributes } = usePopper(referenceElement, popperElement);
   const [sortBy, setSortBy] = useState(SORT_BY[0]);
   const [orderBy, setOrderBy] = useState(ORDER_BY[0]);
+  const { listId } = useParams();
+  const dispatch = useDispatch();
+
+  const handleSortBy = (sort) => {
+    const taskQuery = {
+      fieldPath: sort.value,
+      direction: orderBy.value,
+    };
+    setSortBy(sort);
+    dispatch(getAllTasksBy(listId, taskQuery));
+  };
+
+  const handleOrderBy = (order) => {
+    const taskQuery = {
+      fieldPath: sortBy.value,
+      direction: order.value,
+    };
+    setOrderBy(order);
+    dispatch(getAllTasksBy(listId, taskQuery));
+  };
 
   return (
     <Popover className="relative">
@@ -35,7 +80,7 @@ const SortTask = () => {
             <Select
               label="Sort by: "
               value={sortBy}
-              onChange={setSortBy}
+              onChange={handleSortBy}
               options={SORT_BY}
               selectContainerClassName="col-span-2"
             />
@@ -43,7 +88,7 @@ const SortTask = () => {
             <Select
               label="Order by: "
               value={orderBy}
-              onChange={setOrderBy}
+              onChange={handleOrderBy}
               options={ORDER_BY}
               selectContainerClassName="col-span-2"
             />

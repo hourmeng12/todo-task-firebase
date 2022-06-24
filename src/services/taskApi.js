@@ -52,6 +52,16 @@ class taskApi {
     );
     return getDocs(q);
   }
+  getAllTasksBy(listId, taskQuery) {
+    const userRef = doc(db, 'todo', auth.currentUser.uid);
+    const taskCollectionRef = collection(userRef, 'tasks');
+    const q = query(
+      taskCollectionRef,
+      where('listId', '==', listId),
+      orderBy(taskQuery.fieldPath, taskQuery.direction)
+    );
+    return getDocs(q);
+  }
 }
 
 export default new taskApi();

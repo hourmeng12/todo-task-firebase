@@ -27,7 +27,6 @@ const TodoTask = () => {
 
   useEffect(() => {
     if (!listLoading) {
-      console.log('loaded');
       dispatch(getAllTasks(listId));
     }
   }, [dispatch, listId, listLoading]);
