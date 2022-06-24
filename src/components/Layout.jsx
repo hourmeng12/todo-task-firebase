@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectInitial, initial } from '../features/ui/uiSlice';
 import { auth } from '../services/firebase';
-import { loading, login, logout } from '../features/user/userSlice';
+import { loading, login } from '../features/user/userSlice';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import useScrollToTop from '../hooks/useScrollToTop';
@@ -18,11 +18,9 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      dispatch(loading());
       if (user) {
+        dispatch(loading());
         dispatch(login(user));
-      } else {
-        dispatch(logout());
       }
       dispatch(initial());
     });
