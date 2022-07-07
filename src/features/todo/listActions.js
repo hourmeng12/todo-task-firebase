@@ -7,14 +7,15 @@ import taskApi from '../../services/taskApi';
 
 export const addList = (newList) => async (dispatch) => {
   try {
-    const data = await listApi.addList(newList);
+    const listRef = listApi.newDoc();
     const transformList = {
-      id: data.id,
+      id: listRef.id,
       ...newList,
       tasks: [],
     };
-
     dispatch(todoActions.addList(transformList));
+
+    await listApi.addList(listRef, newList);
   } catch (error) {
     dispatch(todoActions.setError(error.message));
   }

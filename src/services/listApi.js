@@ -1,22 +1,24 @@
 import {
   doc,
   collection,
-  addDoc,
   deleteDoc,
   getDocs,
   query,
   orderBy,
   serverTimestamp,
   updateDoc,
+  setDoc,
 } from 'firebase/firestore';
 
 import { auth, db } from './firebase';
 
 class listApi {
-  addList(newList) {
+  newDoc() {
     const userRef = doc(db, 'todo', auth?.currentUser?.uid ?? '');
-    const listCollectionRef = collection(userRef, 'lists');
-    return addDoc(listCollectionRef, {
+    return doc(collection(userRef, 'lists'));
+  }
+  addList(listRef, newList) {
+    return setDoc(listRef, {
       ...newList,
       createdAt: serverTimestamp(),
     });

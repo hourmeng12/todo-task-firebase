@@ -1,7 +1,6 @@
 import {
   doc,
   collection,
-  addDoc,
   deleteDoc,
   getDocs,
   query,
@@ -9,14 +8,17 @@ import {
   orderBy,
   updateDoc,
   serverTimestamp,
+  setDoc,
 } from 'firebase/firestore';
 import { auth, db } from './firebase';
 
 class taskApi {
-  addTask(listId, newTask) {
+  newDoc() {
     const userRef = doc(db, 'todo', auth?.currentUser?.uid ?? '');
-    const taskCollectionRef = collection(userRef, 'tasks');
-    return addDoc(taskCollectionRef, {
+    return doc(collection(userRef, 'tasks'));
+  }
+  addTask(taskRef, listId, newTask) {
+    return setDoc(taskRef, {
       listId,
       task: newTask,
       completed: false,
@@ -25,8 +27,8 @@ class taskApi {
   }
   updateTask(updatedTask) {
     const userRef = doc(db, 'todo', auth?.currentUser?.uid ?? '');
-    const taskDoc = doc(userRef, 'tasks', updatedTask.id);
-    return updateDoc(taskDoc, {
+    const taskRef = doc(userRef, 'tasks', updatedTask.id);
+    return updateDoc(taskRef, {
       task: updatedTask.task,
     });
   }
