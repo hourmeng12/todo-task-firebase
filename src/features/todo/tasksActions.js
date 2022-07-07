@@ -4,6 +4,7 @@ import taskApi from '../../services/taskApi';
 export const addTask = (listId, task) => async (dispatch) => {
   try {
     const taskRef = taskApi.newDoc();
+    console.log(taskRef.id);
     const transformTask = {
       id: taskRef.id,
       task,
@@ -31,7 +32,7 @@ export const deleteTask = (listId, taskId) => async (dispatch) => {
   try {
     dispatch(todoActions.deleteTask({ listId, taskId }));
 
-    await taskApi.deleteTask(taskId);
+    await taskApi.deleteTask(listId, taskId);
   } catch (error) {
     dispatch(todoActions.setError(error.message));
   }
@@ -41,7 +42,7 @@ export const toggleTask = (listId, task) => async (dispatch) => {
   try {
     dispatch(todoActions.toggleTask({ listId, task }));
 
-    await taskApi.toggleTask(task);
+    await taskApi.toggleTask(listId, task);
   } catch (error) {
     dispatch(todoActions.setError(error.message));
   }
@@ -62,7 +63,9 @@ export const getAllTasks = (listId) => async (dispatch) => {
     });
 
     dispatch(todoActions.getAllTasks({ listId, tasks }));
-  } catch (error) {}
+  } catch (error) {
+    dispatch(todoActions.setError(error.message));
+  }
 };
 
 export const getAllTasksBy = (listId, taskQuery) => async (dispatch) => {
@@ -79,5 +82,7 @@ export const getAllTasksBy = (listId, taskQuery) => async (dispatch) => {
     });
 
     dispatch(todoActions.getAllTasksBy({ listId, tasks }));
-  } catch (error) {}
+  } catch (error) {
+    dispatch(todoActions.setError(error.message));
+  }
 };

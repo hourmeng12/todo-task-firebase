@@ -9,18 +9,21 @@ const initialState = {
       id: 'inbox',
       name: 'Inbox',
       tasks: [],
+      tasksCount: 0,
       theme: '#06B6D4',
     },
     {
       id: 'important',
       name: 'Important',
       tasks: [],
+      tasksCount: 0,
       theme: '#F97316',
     },
     {
       id: 'tasks',
       name: 'Tasks',
       tasks: [],
+      tasksCount: 0,
       theme: '#8B5CF6',
     },
   ],
@@ -64,6 +67,7 @@ const todoSlice = createSlice({
     addTask(state, action) {
       const { listId, task } = action.payload;
       const existingList = state.lists.find((list) => list.id === listId);
+      existingList.tasksCount++;
       existingList.tasks.unshift(task);
     },
     updateTask(state, action) {
@@ -77,6 +81,7 @@ const todoSlice = createSlice({
     deleteTask(state, action) {
       const { listId, taskId } = action.payload;
       const existingList = state.lists.find((list) => list.id === listId);
+      existingList.tasksCount--;
       existingList.tasks = existingList.tasks.filter(
         (task) => task.id !== taskId
       );
@@ -84,6 +89,7 @@ const todoSlice = createSlice({
     toggleTask(state, action) {
       const { listId, task } = action.payload;
       const existingList = state.lists.find((list) => list.id === listId);
+      existingList.tasksCount += task.completed ? 1 : -1;
       const existingTask = existingList.tasks.find(
         (_task) => _task.id === task.id
       );

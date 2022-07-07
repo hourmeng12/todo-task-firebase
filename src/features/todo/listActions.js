@@ -61,6 +61,7 @@ export const getAllLists = () => async (dispatch) => {
         id: doc.id,
         name: docData.name,
         theme: docData.theme,
+        tasksCount: docData.tasksCount,
         tasks: [],
       });
     });

@@ -80,6 +80,7 @@ const ListModal = ({
     const newList = {
       name: enteredName,
       theme: selectedColor,
+      tasksCount: 0,
     };
 
     if (isAdd) {

@@ -223,7 +223,7 @@ const Menu = ({ isOpen, closeSidebar }) => {
   );
 };
 
-const MenuNav = ({ theme, to, option, children }) => {
+const MenuNav = ({ theme, to, tasksCount, option, children }) => {
   const id = to;
   return (
     <div className="relative flex items-center">
@@ -252,6 +252,11 @@ const MenuNav = ({ theme, to, option, children }) => {
         </div>
       </NavLink>
       <div className="absolute right-2 flex items-center space-x-2">
+        {tasksCount > 0 && (
+          <span className="inline-flex h-6 min-w-[1.25rem] items-center justify-center rounded-md bg-black/5 px-1 text-sm dark:bg-white/10">
+            {tasksCount}
+          </span>
+        )}
         {option && (
           <ListOption
             buttonClassName="border-none"

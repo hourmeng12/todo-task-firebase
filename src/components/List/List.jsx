@@ -16,7 +16,7 @@ const List = ({ lists }) => {
             <ListItem
               id={list.id}
               theme={list.theme}
-              // tasksCount={list.tasksCount}
+              tasksCount={list.tasksCount}
               option
             >
               {list.name}

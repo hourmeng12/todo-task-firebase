@@ -1,14 +1,14 @@
 import {
   doc,
   collection,
-  deleteDoc,
   getDocs,
   query,
   where,
   orderBy,
   updateDoc,
   serverTimestamp,
-  setDoc,
+  writeBatch,
+  increment,
 } from 'firebase/firestore';
 import { auth, db } from './firebase';
 
@@ -18,12 +18,21 @@ class taskApi {
     return doc(collection(userRef, 'tasks'));
   }
   addTask(taskRef, listId, newTask) {
-    return setDoc(taskRef, {
+    const userRef = doc(db, 'todo', auth?.currentUser?.uid ?? '');
+    const listRef = doc(userRef, 'lists', listId);
+
+    const batch = writeBatch(db);
+    batch.update(listRef, {
+      tasksCount: increment(1),
+    });
+    batch.set(taskRef, {
       listId,
       task: newTask,
       completed: false,
       createdAt: serverTimestamp(),
     });
+
+    return batch.commit();
   }
   updateTask(updatedTask) {
     const userRef = doc(db, 'todo', auth?.currentUser?.uid ?? '');
@@ -32,17 +41,31 @@ class taskApi {
       task: updatedTask.task,
     });
   }
-  deleteTask(id) {
+  deleteTask(listId, taskId) {
     const userRef = doc(db, 'todo', auth?.currentUser?.uid ?? '');
-    const taskDoc = doc(userRef, 'tasks', id);
-    return deleteDoc(taskDoc);
+    const listRef = doc(userRef, 'lists', listId);
+    const taskRef = doc(userRef, 'tasks', taskId);
+
+    const batch = writeBatch(db);
+    batch.update(listRef, {
+      tasksCount: increment(-1),
+    });
+    batch.delete(taskRef);
+    return batch.commit();
   }
-  toggleTask(task) {
+  toggleTask(listId, task) {
     const userRef = doc(db, 'todo', auth?.currentUser?.uid ?? '');
-    const taskDoc = doc(userRef, 'tasks', task.id);
-    return updateDoc(taskDoc, {
+    const listRef = doc(userRef, 'lists', listId);
+    const taskRef = doc(userRef, 'tasks', task.id);
+
+    const batch = writeBatch(db);
+    batch.update(listRef, {
+      tasksCount: increment(task.completed ? 1 : -1),
+    });
+    batch.update(taskRef, {
       completed: !task.completed,
     });
+    return batch.commit();
   }
   getAllTasks(listId) {
     const userRef = doc(db, 'todo', auth.currentUser.uid);

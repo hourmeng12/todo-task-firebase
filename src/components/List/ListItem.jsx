@@ -26,7 +26,7 @@ const ListItem = ({ id, theme, tasksCount, option, className, children }) => {
         </div>
       </Link>
       <div className="absolute right-2 flex items-center space-x-2">
-        {tasksCount && (
+        {tasksCount > 0 && (
           <span className="inline-flex h-6 min-w-[1.25rem] items-center justify-center rounded-md bg-black/5 px-1 text-sm dark:bg-white/10">
             {tasksCount}
           </span>

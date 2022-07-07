@@ -27,10 +27,12 @@ export const TaskItem = ({ id, theme, isCompleted, onToggle, children }) => {
               isCompleted
                 ? 'opacity-100 group-hover:opacity-80'
                 : 'opacity-10 group-hover:opacity-30'
-            } absolute inset-0 flex items-center justify-center transition-all duration-200`}
+            } absolute inset-0 flex scale-110 items-center justify-center rounded transition-all duration-200`}
           >
-            {isCompleted && (
+            {isCompleted ? (
               <CheckIcon className="h-4 w-4 text-white dark:text-zinc-900" />
+            ) : (
+              <>&nbsp;</>
             )}
           </span>
         </button>
