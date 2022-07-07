@@ -26,6 +26,8 @@ const Navbar = () => {
 
   const handleMode = () => setDarkTheme(!darkTheme);
 
+  const isDarkTheme = darkTheme ?? false;
+
   return (
     <>
       <div className="fixed top-0 left-0 z-40 flex w-full items-center justify-between bg-white/50 p-2 text-zinc-700 backdrop-blur-sm transition-all duration-200 dark:bg-zinc-900/50 dark:text-zinc-200">
@@ -58,7 +60,7 @@ const Navbar = () => {
           >
             <Transition
               as={Fragment}
-              show={darkTheme}
+              show={isDarkTheme}
               enter="transform duration-500 ease-in-out"
               enterFrom="rotate-[-360deg] opacity-0"
               enterTo="rotate-0 opacity-100"
@@ -70,7 +72,7 @@ const Navbar = () => {
             </Transition>
             <Transition
               as={Fragment}
-              show={!darkTheme}
+              show={!isDarkTheme}
               enter="transform duration-300 ease-in-out"
               enterFrom="rotate-[-160deg] opacity-0"
               enterTo="rotate-0 opacity-100"

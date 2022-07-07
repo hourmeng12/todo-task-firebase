@@ -1,12 +1,27 @@
-import { signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  signInAnonymously,
+  FacebookAuthProvider,
+} from 'firebase/auth';
 
 import { auth } from './firebase';
 
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
 
+const facebookProvider = new FacebookAuthProvider();
 class userApi {
+  loginAnonymously = () => {
+    return signInAnonymously(auth);
+  };
+
   loginWithGoogle = () => {
-    return signInWithPopup(auth, provider);
+    return signInWithPopup(auth, googleProvider);
+  };
+
+  loginWithFacebook = () => {
+    return signInWithPopup(auth, facebookProvider);
   };
 
   logOut = () => {
