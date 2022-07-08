@@ -1,20 +1,17 @@
-import React, { useState, Fragment } from 'react';
-import { CollectionIcon, MenuIcon, SunIcon } from '@heroicons/react/outline';
-import { MoonIcon } from '@heroicons/react/solid';
+import React, { useState } from 'react';
+import { CollectionIcon, MenuIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom';
-import { Transition } from '@headlessui/react';
 import { useSelector } from 'react-redux';
 
 import Button from './UI/Button';
 import Menu from './Menu';
-import useDarkMode from '../hooks/useDarkMode';
 import { selectUser } from '../features/user/userSlice';
 import { useCallback } from 'react';
+import ThemeToggleButton from './ThemeToggleButton';
 
 const Navbar = () => {
   const user = useSelector(selectUser);
   const [isOpen, setIsOpen] = useState(false);
-  const [darkTheme, setDarkTheme] = useDarkMode();
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
@@ -23,10 +20,6 @@ const Navbar = () => {
   const closeSidebar = useCallback(() => {
     setIsOpen(false);
   }, []);
-
-  const handleMode = () => setDarkTheme(!darkTheme);
-
-  const isDarkTheme = darkTheme ?? false;
 
   return (
     <>
@@ -49,40 +42,7 @@ const Navbar = () => {
           <h1 className="text-lg font-medium">Todo</h1>
         </Link>
         <div>
-          <Button
-            onClick={handleMode}
-            className={`
-              ${
-                darkTheme
-                  ? 'bg-amber-200 hover:bg-amber-300'
-                  : 'bg-violet-500 hover:bg-violet-600'
-              } max-w-[2.5rem] overflow-hidden`}
-          >
-            <Transition
-              as={Fragment}
-              show={isDarkTheme}
-              enter="transform duration-500 ease-in-out"
-              enterFrom="rotate-[-360deg] opacity-0"
-              enterTo="rotate-0 opacity-100"
-              leave="transform duration-75 ease-in"
-              leaveFrom="rotate-0 opacity-100"
-              leaveTo="rotate-[-180deg] opacity-0"
-            >
-              <SunIcon className="h-5 w-5 text-zinc-900" />
-            </Transition>
-            <Transition
-              as={Fragment}
-              show={!isDarkTheme}
-              enter="transform duration-300 ease-in-out"
-              enterFrom="rotate-[-160deg] opacity-0"
-              enterTo="rotate-0 opacity-100"
-              leave="transform duration-75 ease-in"
-              leaveFrom="rotate-0 opacity-100"
-              leaveTo="rotate-[-180deg] opacity-0"
-            >
-              <MoonIcon className="h-5 w-5 text-white" />
-            </Transition>
-          </Button>
+          <ThemeToggleButton />
         </div>
       </div>
 

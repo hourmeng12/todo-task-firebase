@@ -26,16 +26,35 @@ const useLocalStorage = (key, initialValue) => {
   return [storedValue, setValue];
 };
 
-const useDarkMode = () => {
+const useDarkMode = (lightModeColor, darkModeColor) => {
   const [enabled, setEnabled] = useLocalStorage('dark-theme');
-  const isEnabled = typeof enabledState === 'undefined' && enabled;
+
+  useEffect(() => {
+    const preferColorScheme = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches;
+    if (enabled === undefined && preferColorScheme) {
+      setEnabled(true);
+    }
+    if (enabled === undefined && !preferColorScheme) {
+      setEnabled(false);
+    }
+  }, [enabled, setEnabled]);
 
   useEffect(() => {
     const className = 'dark';
-    const bodyClass = window.document.body.classList;
+    const htmlClass = window.document.documentElement.classList;
+    const themeColor =
+      window.document.getElementsByTagName('meta')['theme-color'];
 
-    isEnabled ? bodyClass.add(className) : bodyClass.remove(className);
-  }, [enabled, isEnabled]);
+    if (enabled) {
+      htmlClass.add(className);
+      themeColor.content = darkModeColor;
+    } else {
+      htmlClass.remove(className);
+      themeColor.content = lightModeColor;
+    }
+  }, [enabled, lightModeColor, darkModeColor]);
 
   return [enabled, setEnabled];
 };
