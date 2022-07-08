@@ -10,7 +10,7 @@ import {
   setDoc,
 } from 'firebase/firestore';
 
-import { auth, db } from './firebase';
+import { auth, db } from '../app/firebase';
 
 class listApi {
   newDoc() {

@@ -10,7 +10,7 @@ import {
   writeBatch,
   increment,
 } from 'firebase/firestore';
-import { auth, db } from './firebase';
+import { auth, db } from '../app/firebase';
 
 class taskApi {
   newDoc() {

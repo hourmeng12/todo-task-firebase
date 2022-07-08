@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectInitial, initial } from '../features/ui/uiSlice';
-import { auth } from '../services/firebase';
+import { auth } from '../app/firebase';
 import { loading, login } from '../features/user/userSlice';
 import { onAuthStateChanged } from 'firebase/auth';
 

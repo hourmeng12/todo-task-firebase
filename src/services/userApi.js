@@ -6,27 +6,24 @@ import {
   FacebookAuthProvider,
 } from 'firebase/auth';
 
-import { auth } from './firebase';
+import { auth } from '../app/firebase';
 
 const googleProvider = new GoogleAuthProvider();
 
 const facebookProvider = new FacebookAuthProvider();
 class userApi {
-  loginAnonymously = () => {
+  loginAnonymously() {
     return signInAnonymously(auth);
-  };
-
-  loginWithGoogle = () => {
+  }
+  loginWithGoogle() {
     return signInWithPopup(auth, googleProvider);
-  };
-
-  loginWithFacebook = () => {
+  }
+  loginWithFacebook() {
     return signInWithPopup(auth, facebookProvider);
-  };
-
-  logOut = () => {
+  }
+  logOut() {
     return signOut(auth);
-  };
+  }
 }
 
 export default new userApi();

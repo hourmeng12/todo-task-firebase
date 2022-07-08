@@ -1,5 +1,5 @@
 import { writeBatch, doc } from 'firebase/firestore';
-import { db, auth } from '../../services/firebase';
+import { db, auth } from '../../app/firebase';
 
 import { todoActions } from './todoSlice';
 import listApi from '../../services/listApi';
