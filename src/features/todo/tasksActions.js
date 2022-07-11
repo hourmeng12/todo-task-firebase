@@ -53,15 +53,16 @@ export const getAllTasks = (listId) => async (dispatch) => {
   try {
     const data = await taskApi.getAllTasks(listId);
     const tasks = [];
-    data.forEach((doc) => {
-      const docData = doc.data();
-      tasks.push({
-        id: doc.id,
-        task: docData.task,
-        completed: docData.completed,
+    if (!data.empty) {
+      data.forEach((doc) => {
+        const docData = doc.data();
+        tasks.push({
+          id: doc.id,
+          task: docData.task,
+          completed: docData.completed,
+        });
       });
-    });
-
+    }
     dispatch(todoActions.getAllTasks({ listId, tasks }));
   } catch (error) {
     dispatch(todoActions.setError(error.message));

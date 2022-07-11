@@ -2,31 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { logout } from '../user/userSlice';
 
 const initialState = {
-  listLoading: false,
+  listLoading: null,
   taskLoading: false,
-  lists: [
-    {
-      id: 'inbox',
-      name: 'Inbox',
-      tasks: [],
-      tasksCount: 0,
-      theme: '#06B6D4',
-    },
-    {
-      id: 'important',
-      name: 'Important',
-      tasks: [],
-      tasksCount: 0,
-      theme: '#F97316',
-    },
-    {
-      id: 'tasks',
-      name: 'Tasks',
-      tasks: [],
-      tasksCount: 0,
-      theme: '#8B5CF6',
-    },
-  ],
+  lists: [],
   error: null,
 };
 
@@ -100,8 +78,10 @@ const todoSlice = createSlice({
         state.taskLoading = false;
         const { listId, tasks } = action.payload;
         const existingList = state.lists.find((list) => list.id === listId);
-        existingList.tasks.length = 0;
-        existingList.tasks.push(...tasks);
+        if (existingList) {
+          existingList.tasks.length = 0;
+          existingList.tasks.push(...tasks);
+        }
       }
     },
     getAllTasksBy(state, action) {
@@ -112,6 +92,8 @@ const todoSlice = createSlice({
     },
     // error
     setError(state, action) {
+      state.taskLoading = false;
+      state.listLoading = false;
       state.error = action.payload;
     },
   },

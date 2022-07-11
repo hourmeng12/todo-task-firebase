@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { updateTask } from '../../features/todo/tasksActions';
@@ -7,6 +7,7 @@ import Button from '../UI/Button';
 import Modal from '../UI/Modal';
 
 const EditTaskModal = ({ id, task = '', theme, isOpen, onClose }) => {
+  let inputRef = useRef(null);
   const [enteredTask, setEnteredTask] = useState(task);
   const { listId } = useParams();
   const dispatch = useDispatch();
@@ -19,7 +20,14 @@ const EditTaskModal = ({ id, task = '', theme, isOpen, onClose }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      afterLeave={() => {
+        setEnteredTask(task);
+      }}
+      initialFocus={inputRef}
+    >
       <form onSubmit={handelUpdateTask}>
         <div className="space-y-1">
           <label
@@ -29,6 +37,7 @@ const EditTaskModal = ({ id, task = '', theme, isOpen, onClose }) => {
             Task
           </label>
           <input
+            ref={inputRef}
             type="text"
             name="task"
             id="task"

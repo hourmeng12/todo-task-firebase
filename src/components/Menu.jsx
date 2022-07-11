@@ -28,6 +28,11 @@ const Menu = ({ isOpen, closeSidebar }) => {
   const lists = useSelector(selectLists);
   const listLoading = useSelector(selectListLoading);
 
+  //default lists
+  const inboxList = lists.find((list) => list.id === 'inbox');
+  const importantList = lists.find((list) => list.id === 'important');
+  const tasksList = lists.find((list) => list.id === 'tasks');
+
   const handleLogout = () => {
     dispatch(logoutUser());
     closeSidebar();
@@ -63,24 +68,24 @@ const Menu = ({ isOpen, closeSidebar }) => {
           <MenuListSkeleton />
         ) : (
           <>
-            <MenuNav to="inbox">
+            <MenuItem to="inbox" tasksCount={inboxList?.tasksCount}>
               <div className="flex items-center">
                 <InboxIcon className="mr-2 h-5 w-5 stroke-[1.5] text-sky-500" />
                 Inbox
               </div>
-            </MenuNav>
-            <MenuNav to="important">
+            </MenuItem>
+            <MenuItem to="important" tasksCount={importantList?.tasksCount}>
               <div className="flex items-center">
                 <StarIcon className="mr-2 h-5 w-5 stroke-[1.5] text-orange-500" />
                 Important
               </div>
-            </MenuNav>
-            <MenuNav to="tasks">
+            </MenuItem>
+            <MenuItem to="tasks" tasksCount={tasksList?.tasksCount}>
               <div className="flex items-center">
                 <ClipboardCheckIcon className="mr-2 h-5 w-5 stroke-[1.5] text-violet-500" />
                 Tasks
               </div>
-            </MenuNav>
+            </MenuItem>
             <div className="mt-2 border-t border-zinc-900/10 pt-2 dark:border-zinc-50/10">
               {/* Default List = 3 */}
               {lists.length > 3 ? (
@@ -90,25 +95,25 @@ const Menu = ({ isOpen, closeSidebar }) => {
                   }
 
                   return (
-                    <MenuNav
+                    <MenuItem
                       key={list.id}
                       to={list.id}
                       theme={list.theme}
                       tasksCount={list.tasksCount}
                     >
                       {list.name}
-                    </MenuNav>
+                    </MenuItem>
                   );
                 })
               ) : (
-                <div className="flex h-[30vh] items-center justify-center">
+                <div className="flex h-[20vh] items-center justify-center">
                   <p className="text-zinc-900 dark:text-zinc-200">
                     Empty List!
                   </p>
                 </div>
               )}
               <button
-                className="inline-flex w-full items-center justify-center rounded-xl border border-zinc-900/10 bg-transparent px-3 py-2 text-zinc-900 hover:bg-zinc-200 dark:border-zinc-50/10 dark:text-zinc-200 dark:hover:bg-zinc-700"
+                className="mt-2 inline-flex w-full items-center justify-center rounded-xl border border-zinc-900/10 bg-transparent px-3 py-2 text-zinc-900 hover:bg-zinc-200 dark:border-zinc-50/10 dark:text-zinc-200 dark:hover:bg-zinc-700"
                 onClick={handleopenModal}
               >
                 <PlusIcon className="mr-2 h-4 w-4" />
@@ -153,24 +158,24 @@ const Menu = ({ isOpen, closeSidebar }) => {
           <MenuListSkeleton />
         ) : (
           <>
-            <MenuNav to="inbox">
+            <MenuItem to="inbox" tasksCount={inboxList?.tasksCount}>
               <div className="flex items-center">
                 <InboxIcon className="mr-2 h-5 w-5 stroke-[1.5] text-sky-500" />
                 Inbox
               </div>
-            </MenuNav>
-            <MenuNav to="important">
+            </MenuItem>
+            <MenuItem to="important" tasksCount={importantList?.tasksCount}>
               <div className="flex items-center">
                 <StarIcon className="mr-2 h-5 w-5 stroke-[1.5] text-orange-500" />
                 Important
               </div>
-            </MenuNav>
-            <MenuNav to="tasks">
+            </MenuItem>
+            <MenuItem to="tasks" tasksCount={tasksList?.tasksCount}>
               <div className="flex items-center">
                 <ClipboardCheckIcon className="mr-2 h-5 w-5 stroke-[1.5] text-violet-500" />
                 Tasks
               </div>
-            </MenuNav>
+            </MenuItem>
             <div className="mt-2 border-t border-zinc-900/10 pt-2 pb-6 dark:border-zinc-50/10">
               {/* Default List = 3 */}
               {lists.length > 3 ? (
@@ -180,7 +185,7 @@ const Menu = ({ isOpen, closeSidebar }) => {
                   }
 
                   return (
-                    <MenuNav
+                    <MenuItem
                       key={list.id}
                       to={list.id}
                       theme={list.theme}
@@ -188,7 +193,7 @@ const Menu = ({ isOpen, closeSidebar }) => {
                       option
                     >
                       {list.name}
-                    </MenuNav>
+                    </MenuItem>
                   );
                 })
               ) : (
@@ -199,7 +204,7 @@ const Menu = ({ isOpen, closeSidebar }) => {
                 </div>
               )}
               <button
-                className="inline-flex w-full items-center justify-center rounded-xl border border-zinc-900/10 bg-transparent px-3 py-2 text-zinc-900 hover:bg-zinc-200 dark:border-zinc-50/10 dark:text-zinc-200 dark:hover:bg-zinc-700"
+                className="mt-2 inline-flex w-full items-center justify-center rounded-xl border border-zinc-900/10 bg-transparent px-3 py-2 text-zinc-900 hover:bg-zinc-200 dark:border-zinc-50/10 dark:text-zinc-200 dark:hover:bg-zinc-700"
                 onClick={handleopenModal}
               >
                 <PlusIcon className="mr-2 h-4 w-4" />
@@ -223,7 +228,7 @@ const Menu = ({ isOpen, closeSidebar }) => {
   );
 };
 
-const MenuNav = ({ theme, to, tasksCount, option, children }) => {
+const MenuItem = ({ theme, to, tasksCount, option, children }) => {
   const id = to;
   return (
     <div className="relative flex items-center">
@@ -253,7 +258,7 @@ const MenuNav = ({ theme, to, tasksCount, option, children }) => {
       </NavLink>
       <div className="absolute right-2 flex items-center space-x-2">
         {tasksCount > 0 && (
-          <span className="inline-flex h-6 min-w-[1.25rem] items-center justify-center rounded-md bg-black/5 px-1 text-sm dark:bg-white/10">
+          <span className="inline-flex h-6 min-w-[1.25rem] items-center justify-center rounded-md bg-black/5 px-1 text-sm text-zinc-600 dark:bg-white/10 dark:text-zinc-400">
             {tasksCount}
           </span>
         )}

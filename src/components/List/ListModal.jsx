@@ -5,41 +5,6 @@ import { useDispatch } from 'react-redux';
 import { addList, updatedList } from '../../features/todo/listActions';
 import Button from '../UI/Button';
 
-const ColorItem = ({ isSelected, name, id, value }) => {
-  return (
-    <>
-      <input
-        className="hidden"
-        type="radio"
-        name={name}
-        id={id}
-        value={value}
-      />
-      <label
-        style={{
-          backgroundColor: value,
-        }}
-        className={`inline-flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-500 ${
-          isSelected === value
-            ? 'ring-2 ring-zinc-900/10 dark:ring-white/10'
-            : ''
-        }`}
-        htmlFor={id}
-      >
-        <span
-          className={
-            isSelected === value
-              ? 'h-3 w-3 rounded-full bg-zinc-900/80'
-              : 'bg-transparent'
-          }
-        >
-          &nbsp;
-        </span>
-      </label>
-    </>
-  );
-};
-
 const ListModal = ({
   isAdd,
   isEdit,
@@ -163,6 +128,41 @@ const ListModal = ({
         </div>
       </form>
     </Modal>
+  );
+};
+
+const ColorItem = ({ isSelected, name, id, value }) => {
+  return (
+    <>
+      <input
+        className="hidden"
+        type="radio"
+        name={name}
+        id={id}
+        value={value}
+      />
+      <label
+        style={{
+          backgroundColor: value,
+        }}
+        className={`inline-flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-500 ${
+          isSelected === value
+            ? 'ring-2 ring-zinc-900/10 dark:ring-white/10'
+            : ''
+        }`}
+        htmlFor={id}
+      >
+        <span
+          className={
+            isSelected === value
+              ? 'h-3 w-3 rounded-full bg-zinc-900/80'
+              : 'bg-transparent'
+          }
+        >
+          &nbsp;
+        </span>
+      </label>
+    </>
   );
 };
 

@@ -20,21 +20,31 @@ const TodoTask = () => {
   const lists = useSelector(selectLists);
   const listLoading = useSelector(selectListLoading);
   const taskLoading = useSelector(selectTaskLoading);
-  const list = lists.find((list) => list.id === listId) ?? {};
+  const list = lists.find((list) => list.id === listId);
   const activeTasks = list?.tasks?.filter((task) => !task.completed) ?? [];
   const completedTasks = list?.tasks?.filter((task) => task.completed) ?? [];
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!listLoading) {
+    if (listLoading === false) {
       dispatch(getAllTasks(listId));
     }
   }, [dispatch, listId, listLoading]);
 
-  if (taskLoading) {
+  if (listLoading || taskLoading) {
     return (
       <div className="mx-auto max-w-4xl px-4 transition-all duration-200">
         <TaskSkeleton />
+      </div>
+    );
+  }
+
+  if (!list) {
+    return (
+      <div className="mx-auto max-w-4xl py-8 px-4 text-center transition-all duration-200">
+        <p className="text-zinc-900 dark:text-zinc-200">
+          No list found! Try navigate to another list or add new list
+        </p>
       </div>
     );
   }
@@ -56,7 +66,7 @@ const TodoTask = () => {
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 pb-6">
         <div className="space-y-2">
           <AddTask theme={list.theme} />
           <Task tasks={activeTasks} theme={list.theme} />

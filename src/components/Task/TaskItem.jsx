@@ -16,7 +16,7 @@ export const TaskItem = ({ id, theme, isCompleted, onToggle, children }) => {
       <div className="flex items-center">
         <button
           style={{ borderColor: theme }}
-          className="group relative mr-2 h-5 w-5 rounded-md border-2 hover:bg-opacity-50"
+          className="group relative mr-2 h-5 w-5 flex-shrink-0 rounded-md border-2 hover:bg-opacity-50"
           onClick={handleToggle}
         >
           <span

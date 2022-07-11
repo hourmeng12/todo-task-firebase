@@ -38,7 +38,7 @@ const SortTask = () => {
   const [popperElement, setPopperElement] = useState();
   const { styles, attributes } = usePopper(referenceElement, popperElement);
   const [sortBy, setSortBy] = useState(SORT_BY[0]);
-  const [orderBy, setOrderBy] = useState(ORDER_BY[0]);
+  const [orderBy, setOrderBy] = useState(ORDER_BY[1]);
   const { listId } = useParams();
   const dispatch = useDispatch();
 

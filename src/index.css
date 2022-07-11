@@ -7,6 +7,10 @@
     font-family: 'DM Sans', sans-serif;
   }
 
+  body {
+    @apply bg-zinc-100 dark:bg-zinc-900;
+  }
+
   input[type='text'],
   input[type='password'],
   input[type='email'],

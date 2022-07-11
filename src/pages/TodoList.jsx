@@ -30,6 +30,11 @@ const TodoList = () => {
   const listLoading = useSelector(selectListLoading);
   const dispatch = useDispatch();
 
+  //default lists
+  const inboxList = lists.find((list) => list.id === 'inbox');
+  const importantList = lists.find((list) => list.id === 'important');
+  const tasksList = lists.find((list) => list.id === 'tasks');
+
   useEffect(() => {
     dispatch(getAllLists());
   }, [dispatch]);
@@ -40,24 +45,24 @@ const TodoList = () => {
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-6 transition-all duration-200">
-      {listLoading ? (
+      {listLoading || listLoading === null ? (
         <ListSkeleton />
       ) : (
         <>
           <div className="mt-4 space-y-2 lg:mt-8">
-            <ListItem id="inbox" tasksCount={lists[0].tasksCount}>
+            <ListItem id="inbox" tasksCount={inboxList?.tasksCount}>
               <div className="flex items-center">
                 <InboxIcon className="mr-2 h-5 w-5 stroke-[1.5] text-sky-500" />
                 Inbox
               </div>
             </ListItem>
-            <ListItem id="important" tasksCount={lists[1].tasksCount}>
+            <ListItem id="important" tasksCount={importantList?.tasksCount}>
               <div className="flex items-center">
                 <StarIcon className="mr-2 h-5 w-5 stroke-[1.5] text-orange-500" />
                 Important
               </div>
             </ListItem>
-            <ListItem id="tasks" tasksCount={lists[2].tasksCount}>
+            <ListItem id="tasks" tasksCount={tasksList?.tasksCount}>
               <div className="flex items-center">
                 <ClipboardCheckIcon className="mr-2 h-5 w-5 stroke-[1.5] text-violet-500" />
                 Tasks
@@ -78,7 +83,25 @@ const TodoList = () => {
               </button>
               <ListModal isAdd isOpen={isOpen} onClose={closeModal} />
             </div>
-            <List lists={lists} />
+            {lists.length > 3 ? (
+              <List lists={lists} />
+            ) : (
+              <div className="flex flex-col items-center">
+                <div className="flex h-[30vh] items-center justify-center">
+                  <p className="text-zinc-900 dark:text-zinc-200">
+                    Empty List!
+                  </p>
+                </div>
+
+                <button
+                  className="mt-2 inline-flex items-center justify-center rounded-xl border border-zinc-900/10 bg-white px-12 py-2 text-zinc-900 transition-colors duration-200 hover:bg-zinc-200 dark:border-zinc-50/10 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
+                  onClick={openModal}
+                >
+                  <PlusIcon className="mr-2 h-4 w-4" />
+                  New List
+                </button>
+              </div>
+            )}
           </div>
         </>
       )}
