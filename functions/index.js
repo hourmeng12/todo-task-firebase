@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 const db = admin.firestore();
 
+// create 3 default lists
 exports.createDefaultLists = functions.auth.user().onCreate((user) => {
   const userRef = db.collection('todo').doc(user.uid);
   const listRef = userRef.collection('lists');
@@ -31,7 +32,23 @@ exports.createDefaultLists = functions.auth.user().onCreate((user) => {
   return batch.commit();
 });
 
-exports.deleteTodoLists = functions.auth.user().onDelete((user) => {
+// delete all lists on deleting user
+exports.deleteTodoLists = functions.auth.user().onDelete(async (user) => {
   const userRef = db.collection('todo').doc(user.uid);
-  return userRef.delete();
+  const listRef = userRef.collection('lists');
+  const taskRef = userRef.collection('tasks');
+  const batch = db.batch();
+  // Delete all lists doc
+  const listQuery = await listRef.get();
+  listQuery.forEach((doc) => {
+    const docRef = listRef.doc(doc.id);
+    batch.delete(docRef);
+  });
+  const taskQuery = await taskRef.get();
+  taskQuery.forEach((doc) => {
+    const docRef = taskRef.doc(doc.id);
+    batch.delete(docRef);
+  });
+
+  return await batch.commit();
 });
