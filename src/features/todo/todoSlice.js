@@ -4,7 +4,11 @@ import { logout } from '../user/userSlice';
 const initialState = {
   listLoading: null,
   taskLoading: false,
-  lists: [],
+  lists: [
+    { name: 'Inbox', tasksCount: 0, tasks: [], theme: '#06B6D4' },
+    { name: 'Important', tasksCount: 0, tasks: [], theme: '#F97316' },
+    { name: 'Tasks', tasksCount: 0, tasks: [], theme: '#8B5CF6' },
+  ],
   error: null,
 };
 
@@ -35,10 +39,13 @@ const todoSlice = createSlice({
       state.lists = state.lists.filter((list) => list.id !== id);
     },
     getAllLists(state, action) {
+      const lists = action.payload;
       if (state.listLoading) {
         state.listLoading = false;
-        const lists = action.payload;
-        state.lists.push(...lists);
+        if (lists.length > 0) {
+          state.lists.length = 0;
+          state.lists.push(...lists);
+        }
       }
     },
     // task reducer
@@ -99,6 +106,7 @@ const todoSlice = createSlice({
   },
   extraReducers: {
     [logout]: (state) => {
+      // clear all lists then add default lists for login user
       state.lists.length = 0;
       state.lists.push(
         {
@@ -120,7 +128,6 @@ const todoSlice = createSlice({
           theme: '#8B5CF6',
         }
       );
-      console.log('push list');
     },
   },
 });
