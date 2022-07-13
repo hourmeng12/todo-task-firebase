@@ -21,10 +21,7 @@ A Todo Task project built with React, Redux, Firebase and Tailwind Css. Organize
 
 <img src="https://imgur.com/1QWsQCu.jpg" style="max-width: 100px; width: 100%; height: auto;">
 
-<img src="https://imgur.com/z2s3tRt.jpg" style="max-height: 100px; width: auto; height: auto;">
-<img src="https://imgur.com/ePYv96H.jpg" style="max-height: 100px; width: auto; height: auto;">
-<img src="https://imgur.com/lndSSWP.jpg" style="max-height: 100px; width: auto; height: auto;">
-<img src="https://imgur.com/wlicYP3.jpg" style="max-height: 100px; width: auto; height: auto;">
+<img src="https://imgur.com/g3wRCDN.jpg" style="max-height: 100px; width: auto; height: auto;">
 
 ### Tools
 
