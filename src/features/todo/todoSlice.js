@@ -5,9 +5,27 @@ const initialState = {
   listLoading: null,
   taskLoading: false,
   lists: [
-    { name: 'Inbox', tasksCount: 0, tasks: [], theme: '#06B6D4' },
-    { name: 'Important', tasksCount: 0, tasks: [], theme: '#F97316' },
-    { name: 'Tasks', tasksCount: 0, tasks: [], theme: '#8B5CF6' },
+    {
+      id: 'inbox',
+      name: 'Inbox',
+      tasks: [],
+      tasksCount: 0,
+      theme: '#06B6D4',
+    },
+    {
+      id: 'important',
+      name: 'Important',
+      tasks: [],
+      tasksCount: 0,
+      theme: '#F97316',
+    },
+    {
+      id: 'tasks',
+      name: 'Tasks',
+      tasks: [],
+      tasksCount: 0,
+      theme: '#8B5CF6',
+    },
   ],
   error: null,
 };
@@ -113,18 +131,21 @@ const todoSlice = createSlice({
           id: 'inbox',
           name: 'Inbox',
           tasks: [],
+          tasksCount: 0,
           theme: '#06B6D4',
         },
         {
           id: 'important',
           name: 'Important',
           tasks: [],
+          tasksCount: 0,
           theme: '#F97316',
         },
         {
           id: 'tasks',
           name: 'Tasks',
           tasks: [],
+          tasksCount: 0,
           theme: '#8B5CF6',
         }
       );
