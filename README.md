@@ -33,10 +33,12 @@ A Todo Task project built with React, Redux, Firebase and Tailwind Css. Organize
 ### Installation
 
 ```sh
-git clone https://github.com/hourmeng12/crypto-tracker
+git clone https://github.com/hourmeng12/todo-task-firebase
 
 npm install
-
+```
+Configure `.env` file with your firebase configurations.
+```sh
 npm start / npm run build
 ```
 
